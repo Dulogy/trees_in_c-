@@ -1,0 +1,99 @@
+// BINARY_TREE   GOOD APPROACH
+
+#include<iostream>
+#include<queue>
+using namespace std ;
+template<typename T>
+class binaryTreeNode{
+    public: 
+    T data ;
+    binaryTreeNode* left  ;
+    binaryTreeNode* right ;
+
+    binaryTreeNode(T data){
+       this -> data = data ;
+       left = NULL  ;
+       right = NULL ; 
+    }
+    ~binaryTreeNode(){
+        delete left  ;
+        delete right ;
+    }
+
+};
+
+
+binaryTreeNode<int>*takeInputLevelWise(){
+    int rootData ;
+    cout << "enter root data:" << "\n" ;
+    cin >> rootData ;
+    if(rootData == -1){
+        return NULL;
+    }
+    binaryTreeNode<int>* root = new binaryTreeNode<int>(rootData) ;
+    queue<binaryTreeNode<int>*>pendingNodes ;
+    pendingNodes.push(root) ;
+    while(pendingNodes.size() != 0){
+    binaryTreeNode<int>* front = pendingNodes.front() ;
+    pendingNodes.pop() ;
+    cout << "enter left child of :" << front -> data << "\n" ;
+    int leftchildData ;
+    cin >> leftchildData ;
+    if(leftchildData != -1){
+        binaryTreeNode<int>* child = new binaryTreeNode<int>(leftchildData) ;
+        front -> left = child ;
+        pendingNodes.push(child) ;
+    }
+
+     cout << "enter right child of :" << front -> data << "\n" ;
+    int rightchildData ;
+    cin >> rightchildData ;
+    if(rightchildData != -1){
+        binaryTreeNode<int>* child = new binaryTreeNode<int>(rightchildData) ;
+        front -> right = child ;
+        pendingNodes.push(child) ;
+    }
+    }
+return root ;
+}
+
+void printTreelevelWise(binaryTreeNode<int>*root){
+    if(root == NULL){
+        return ;
+    }
+    queue<binaryTreeNode<int>*> q ;
+    q.push(root) ;
+    while(!q.empty()){
+        binaryTreeNode<int> *node = q.front() ;
+        q.pop() ;
+        if(node == NULL){
+            cout << "\n" ;
+            if(! q.empty()) 
+            q.push(NULL) ;
+        }
+        else{
+            cout << node -> data << ":" ;
+            cout << "l " ;
+            if(node -> left){
+                q.push(node -> left) ;
+                cout << node -> left -> data << ",";
+            }
+            else{
+                cout << -1 << "," ;
+            }
+            cout << "r " ;
+            if(node -> right){
+                q.push(node -> right) ;
+                cout << node -> right -> data << "\n";
+            }
+            else{
+                cout << -1 << "\n";
+            }
+        }
+    }
+}
+int main(){
+ binaryTreeNode<int>* root = takeInputLevelWise() ;
+printTreelevelWise(root) ;
+delete root ;
+}
