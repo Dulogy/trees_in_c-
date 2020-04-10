@@ -1,5 +1,3 @@
-// take input level wise in tree
-
 #include<iostream>
 #include<vector>
 #include<queue>
@@ -40,13 +38,13 @@ treeNode<int>*takeInputLevelWise(){
         return root ;
 }
 
- void printLevelWise(TreeNode<int>* root){
+ void printLevelWise(treeNode<int>* root){
     if(root==NULL)
         return;
-    queue<TreeNode<int>*>pendingnodes;
+    queue<treeNode<int>*>pendingnodes;
 	pendingnodes.push(root);
     while(pendingnodes.size()!=0){
-	TreeNode<int>*front=pendingnodes.front();
+	treeNode<int>*front=pendingnodes.front();
         pendingnodes.pop();
         cout<<front->data<<":";
         for(int i=0;i<front->children.size(); i++){
@@ -59,9 +57,17 @@ treeNode<int>*takeInputLevelWise(){
             cout<<endl;
     }
  }
+int countNodes(treeNode<int>*root){
+    int ans = 1 ;
+    for(int i = 0; i < root -> children.size(); i++ ){
+        ans = ans + countNodes(root -> children[i]) ;
+    }
+    return ans ;
+}
 
 int main(){
     treeNode<int>* root = takeInputLevelWise() ;
     printLevelWise(root) ;
+    cout << "total nodes are : " << countNodes(root) << "\n" ;
 
 }
