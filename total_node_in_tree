@@ -1,0 +1,9 @@
+// find total nodes in tree function
+
+int total_node(treeNode<int>*root){
+int totalNodes = 1 ;
+for(int i = 0; i < root -> children.size(); i++){
+totalNodes = totalNodes + total_node(root -> children[i]) ;
+}
+return totalNodes ;
+}
